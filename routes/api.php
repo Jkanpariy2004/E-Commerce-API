@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticlesController;
 use App\Http\Controllers\Admin\Auth\AuthtenticationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectsController;
@@ -16,6 +17,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
+<<<<<<< HEAD
     // services api
     Route::prefix('services')->controller(ServicesController::class)->group(function () {
         Route::get('/get', 'index');
@@ -27,6 +29,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // project api
     Route::prefix('projects')->controller(ProjectsController::class)->group(function () {
+=======
+    Route::prefix('blogs')->controller(ArticlesController::class)->group(function () {
+>>>>>>> 16ce74e41e9f42c8e46a6963c4bf77ada48b8b2f
         Route::get('/get', 'index');
         Route::get('/get/{id}', 'show');
         Route::post('/insert', 'store');
