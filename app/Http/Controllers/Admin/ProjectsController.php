@@ -28,7 +28,7 @@ class ProjectsController extends Controller
                     'construction_type' => $project->construction_type,
                     'sector' => $project->sector,
                     'location' => $project->location,
-                    'image' => $project->image ? $baseUrl . '/Services/' . $project->image : null,
+                    'image' => $project->image ? $baseUrl . '/Projects/' . $project->image : null,
                     'status' => $project->status,
                 ];
             });
@@ -66,7 +66,7 @@ class ProjectsController extends Controller
                     'construction_type' => $project->construction_type,
                     'sector' => $project->sector,
                     'location' => $project->location,
-                    'image' => $project->image ? $baseUrl . '/Services/' . $project->image : null,
+                    'image' => $project->image ? $baseUrl . '/Projects/' . $project->image : null,
                     'status' => $project->status,
                 ],
             ], 200);
@@ -139,7 +139,7 @@ class ProjectsController extends Controller
                 'construction_type' => $project->construction_type,
                 'sector' => $project->sector,
                 'location' => $project->location,
-                'image' => $project->image ? $baseUrl . '/Services/' . $project->image : null,
+                'image' => $project->image ? $baseUrl . '/Projects/' . $project->image : null,
                 'status' => $project->status,
             ],
         ], 200);
@@ -213,7 +213,7 @@ class ProjectsController extends Controller
                 'construction_type' => $project->construction_type,
                 'sector' => $project->sector,
                 'location' => $project->location,
-                'image' => $project->image ? $baseUrl . '/Services/' . $project->image : null,
+                'image' => $project->image ? $baseUrl . '/Projects/' . $project->image : null,
                 'status' => $project->status,
             ],
         ], 200);
@@ -249,7 +249,7 @@ class ProjectsController extends Controller
                     'construction_type' => $project->construction_type,
                     'sector' => $project->sector,
                     'location' => $project->location,
-                    'image' => $project->image ? $baseUrl . '/Services/' . $project->image : null,
+                    'image' => $project->image ? $baseUrl . '/Projects/' . $project->image : null,
                     'status' => $project->status,
                 ],
             ], 200);

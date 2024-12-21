@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Articles;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -44,7 +44,6 @@ class ArticlesController extends Controller
         }
     }
 
-
     /**
      * Display the specified resource.
      */
@@ -64,8 +63,8 @@ class ArticlesController extends Controller
                     'auther' => $blog->auther,
                     'content' => $blog->content,
                     'image' => $baseurl . '/Articales/' . $blog->image,
-                    'status' => $blog->status
-                ]
+                    'status' => $blog->status,
+                ],
             ], 200);
         } else {
             return response()->json([
@@ -93,7 +92,7 @@ class ArticlesController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Please Fix Validation Errors.',
-                'error' => $validator->errors()
+                'error' => $validator->errors(),
             ], 400);
         }
 
@@ -104,8 +103,12 @@ class ArticlesController extends Controller
         $blog->content = $request->content;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = Str::slug($request->title) . '.' . $image->extension();
-            $image->move(public_path('Articales'), $imageName);
+            $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $sanitizedName = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $originalName));
+
+            $imageName = $sanitizedName . '-' . time() . '.' . $image->extension();
+            $image->move(public_path('Articles'), $imageName);
             $blog->image = $imageName;
         }
         $blog->status = $request->status;
@@ -124,8 +127,8 @@ class ArticlesController extends Controller
                 'auther' => $blog->auther,
                 'content' => $blog->content,
                 'image' => $baseurl . '/Articales/' . $blog->image,
-                'status' => $blog->status
-            ]
+                'status' => $blog->status,
+            ],
         ], 200);
     }
 
@@ -147,7 +150,7 @@ class ArticlesController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Please fix validation errors.',
-                'error' => $validator->errors()
+                'error' => $validator->errors(),
             ], 400);
         }
 
@@ -167,15 +170,19 @@ class ArticlesController extends Controller
 
         if ($request->hasFile('image')) {
             if ($blog->image) {
-                $oldImagePath = public_path($blog->image);
+                $oldImagePath = public_path('Articles/' . $blog->image);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
 
             $image = $request->file('image');
-            $imageName = Str::slug($request->title) . '.' . $image->extension();
-            $image->move(public_path('Articales'), $imageName);
+            $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $sanitizedName = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $originalName));
+
+            $imageName = $sanitizedName . '-' . time() . '.' . $image->extension();
+            $image->move(public_path('Articles'), $imageName);
             $blog->image = $imageName;
         }
 
@@ -194,11 +201,10 @@ class ArticlesController extends Controller
                 'auther' => $blog->auther,
                 'content' => $blog->content,
                 'image' => $baseurl . '/Articales/' . $blog->image,
-                'status' => $blog->status
-            ]
+                'status' => $blog->status,
+            ],
         ], 200);
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -209,7 +215,7 @@ class ArticlesController extends Controller
 
         if ($blog) {
             if ($blog->image) {
-                $oldImagePath = public_path($blog->image);
+                $oldImagePath = public_path('Articles/' . $blog->image);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
@@ -228,13 +234,13 @@ class ArticlesController extends Controller
                     'auther' => $blog->auther,
                     'content' => $blog->content,
                     'image' => $baseurl . '/Articales/' . $blog->image,
-                    'status' => $blog->status
-                ]
+                    'status' => $blog->status,
+                ],
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Blog Not Found.'
+                'message' => 'Blog Not Found.',
             ], 404);
         }
     }
