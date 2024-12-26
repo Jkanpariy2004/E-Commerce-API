@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\AuthtenticationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectsController;
 use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\Frontend\ProjectController;
 use App\Http\Controllers\Frontend\ServiceController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,10 @@ Route::get('/get-latest-services', [ServiceController::class, 'latestServices'])
 // projects frontend api
 Route::get('/get-projects', [ProjectController::class, 'index']);
 Route::get('/get-latest-projects', [ProjectController::class, 'latestServices']);
+
+// projects frontend api
+Route::get('/get-articles', [ArticleController::class, 'index']);
+Route::get('/get-latest-articles', [ArticleController::class, 'latestArticles']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logout', [AuthtenticationController::class, 'Logout']);

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Articles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class ArticlesController extends Controller
 {
@@ -25,9 +24,9 @@ class ArticlesController extends Controller
                     'id' => $blog->id,
                     'title' => $blog->title,
                     'slug' => $blog->slug,
-                    'author' => $blog->author,
+                    'auther' => $blog->auther,
                     'content' => $blog->content,
-                    'image' => $baseurl . '/Articales/' . $blog->image,
+                    'image' => $baseurl . '/Articles/' . $blog->image,
                     'status' => $blog->status,
                 ];
             });
@@ -62,7 +61,7 @@ class ArticlesController extends Controller
                     'slug' => $blog->slug,
                     'auther' => $blog->auther,
                     'content' => $blog->content,
-                    'image' => $baseurl . '/Articales/' . $blog->image,
+                    'image' => $baseurl . '/Articles/' . $blog->image,
                     'status' => $blog->status,
                 ],
             ], 200);
@@ -98,7 +97,7 @@ class ArticlesController extends Controller
 
         $blog = new Articles();
         $blog->title = $request->title;
-        $blog->slug = $request->slug ? $request->slug : Str::slug($request->title);
+        $blog->slug = preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower($request->title)));
         $blog->auther = $request->auther;
         $blog->content = $request->content;
         if ($request->hasFile('image')) {
@@ -126,7 +125,7 @@ class ArticlesController extends Controller
                 'slug' => $blog->slug,
                 'auther' => $blog->auther,
                 'content' => $blog->content,
-                'image' => $baseurl . '/Articales/' . $blog->image,
+                'image' => $baseurl . '/Articles/' . $blog->image,
                 'status' => $blog->status,
             ],
         ], 200);
@@ -142,7 +141,7 @@ class ArticlesController extends Controller
             'slug' => 'nullable',
             'auther' => 'required',
             'content' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png',
+            'image' => 'nullable|mimes:jpg,jpeg,png',
             'status' => 'required',
         ]);
 
@@ -164,7 +163,7 @@ class ArticlesController extends Controller
         }
 
         $blog->title = $request->title;
-        $blog->slug = $request->slug ? $request->slug : Str::slug($request->title);
+        $blog->slug = preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower($request->title)));
         $blog->auther = $request->auther;
         $blog->content = $request->content;
 
@@ -200,7 +199,7 @@ class ArticlesController extends Controller
                 'slug' => $blog->slug,
                 'auther' => $blog->auther,
                 'content' => $blog->content,
-                'image' => $baseurl . '/Articales/' . $blog->image,
+                'image' => $baseurl . '/Articles/' . $blog->image,
                 'status' => $blog->status,
             ],
         ], 200);
@@ -233,7 +232,7 @@ class ArticlesController extends Controller
                     'slug' => $blog->slug,
                     'auther' => $blog->auther,
                     'content' => $blog->content,
-                    'image' => $baseurl . '/Articales/' . $blog->image,
+                    'image' => $baseurl . '/Articles/' . $blog->image,
                     'status' => $blog->status,
                 ],
             ], 200);
