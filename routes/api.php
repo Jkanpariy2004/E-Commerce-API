@@ -5,9 +5,11 @@ use App\Http\Controllers\Admin\Auth\AuthtenticationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectsController;
 use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\TestimonialsController;
 use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\Frontend\ProjectController;
 use App\Http\Controllers\Frontend\ServiceController;
+use App\Http\Controllers\Frontend\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthtenticationController::class, 'Authenticate']);
@@ -20,9 +22,12 @@ Route::get('/get-latest-services', [ServiceController::class, 'latestServices'])
 Route::get('/get-projects', [ProjectController::class, 'index']);
 Route::get('/get-latest-projects', [ProjectController::class, 'latestServices']);
 
-// projects frontend api
+// articles frontend api
 Route::get('/get-articles', [ArticleController::class, 'index']);
 Route::get('/get-latest-articles', [ArticleController::class, 'latestArticles']);
+
+// testimonials frontend api
+Route::get('/get-testimonials', [TestimonialController::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logout', [AuthtenticationController::class, 'Logout']);
@@ -49,6 +54,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // blog api
     Route::prefix('blogs')->controller(ArticlesController::class)->group(function () {
+        Route::get('/get', 'index');
+        Route::get('/get/{id}', 'show');
+        Route::post('/insert', 'store');
+        Route::post('/update/{id}', 'update');
+        Route::get('/delete/{id}', 'destroy');
+    });
+
+    // Testimonial api
+    Route::prefix('testimonial')->controller(TestimonialsController::class)->group(function () {
         Route::get('/get', 'index');
         Route::get('/get/{id}', 'show');
         Route::post('/insert', 'store');

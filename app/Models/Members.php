@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Articles extends Model
+class Members extends Model
 {
     use HasFactory;
-    protected $table = 'articals';
+    protected $table = 'members';
 
     protected $fillable = [
-        'title',
-        'slug',
-        'auther',
-        'content',
+        'name',
         'image',
-        'status'
+        'job_title',
+        'linkedin_url',
+        'status',
     ];
 }
