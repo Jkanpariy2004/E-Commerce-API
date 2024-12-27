@@ -37,4 +37,30 @@ class ServiceController extends Controller
         return $services;
     }
 
+    public function slug($slug)
+    {
+        $service = Services::where('slug', $slug)->first();
+
+        if ($service) {
+            $baseUrl = env('APP_URL');
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'id' => $service->id,
+                    'title' => $service->title,
+                    'slug' => $service->slug,
+                    'short_desc' => $service->short_desc,
+                    'content' => $service->content,
+                    'image' => $service->image ? $baseUrl . '/Services/' . $service->image : null,
+                    'status' => $service->status,
+                ],
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'service not found.',
+            ], 404);
+        }
+    }
 }
